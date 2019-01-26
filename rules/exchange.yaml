@@ -1,0 +1,30 @@
+---
+name: "community_update"
+pack: "st2community"
+description: "Daily publish previous 24 hours statistics."
+enabled: true
+
+trigger:
+  type: "core.st2.CronTimer"
+  parameters:
+    timezone: "UTC"
+    day_of_week: '*'
+    hour: 19
+    minute: 30
+    second: 0
+
+action:
+  ref: "st2community.community_update"
+  parameters:
+    user: "StackStorm-Exchange"
+    channel: support
+    delta:
+      days: 1
+      minutes: 10
+    body: |
+      Good morning, @oncall. Here's your community update. Yesterday there were **\{\{ new_issue_count \}\}** new issue(s), and **\{\{ new_pull_count \}\}** new pull request(s).
+      \{% if pulls %\}*Pull Requests*
+      \{% for pull in pulls %}* <{{ pull.base.repo.html_url }}|\{\{ pull.base.repo.name \}\}>: <\{\{ pull.html_url \}\}|\{\{ pull.title \}\}> by <\{\{ pull.user.html_url \}\}|\{\{ pull.user.name \}\}>
+      \{% endfor %\}\{% endif %\}\{% if issues %\}*Issues:*
+      \{% for issue in issues %\}* <\{\{ issue.repository.html_url \}\}|\{\{ issue.repository.name \}\}>: <\{\{ issue.html_url \}\}|\{\{ issue.title \}\}> by <\{\{ issue.user.html_url \}\}|\{\{ issue.user.name \}\}>
+      \{% endfor %\}\{% endif %\}

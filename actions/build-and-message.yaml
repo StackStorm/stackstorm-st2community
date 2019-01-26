@@ -1,0 +1,23 @@
+---
+name: build-and-message
+pack: st2community
+description: Send update to given channel.
+runner_type: orquesta
+entry_point: workflows/build-and-message.yaml
+enabled: true
+parameters:
+  channel:
+    type: string
+    required: true
+  body:
+    type: string
+    required: true
+  user:
+    type: string
+    required: true
+  delta:
+    type: object
+    required: true
+    default:
+      days: 1
+      minutes: 10

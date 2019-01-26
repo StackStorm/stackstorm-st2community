@@ -1,0 +1,20 @@
+---
+name: build-text
+pack: st2community
+description: Render given text with information about PRs and Issues.
+runner_type: python-script
+entry_point: python_actions/build_text.py
+enabled: true
+parameters:
+  body:
+    type: string
+    required: true
+  user:
+    type: string
+    required: true
+  delta:
+    type: object
+    required: true
+    default:
+      days: 1
+      minutes: 10

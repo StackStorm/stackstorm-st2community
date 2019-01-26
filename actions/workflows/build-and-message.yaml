@@ -1,0 +1,28 @@
+version: 1.0
+
+description: Send update to given channel.
+
+input:
+  - channel
+  - body
+  - user
+  - delta
+
+tasks:
+  build-message:
+    action: st2community.build-text
+    parameters:
+      body: <% ctx(body) %>
+      user: <% ctx(user) %>
+      delta: <% ctx(delta) %> 
+    next:
+      - when: <% succeeded() %>
+        next:
+          - send-message
+        publish:
+          - message: <% result().body %>
+  send-message:
+    action: chatops.post_message
+    parameters:
+      channel: <% ctx(channel) %>
+      timeout: <% ctx(message) %>

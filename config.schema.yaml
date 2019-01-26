@@ -1,0 +1,6 @@
+---
+token:
+  description: "Github authentication token."
+  type: "string"
+  secret: true
+  required: true
