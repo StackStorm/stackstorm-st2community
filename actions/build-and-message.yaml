@@ -1,6 +1,6 @@
 ---
 name: build-and-message
-pack: st2community
+pack: stackstorm-community
 description: Send update to given channel.
 runner_type: orquesta
 entry_point: workflows/build-and-message.yaml

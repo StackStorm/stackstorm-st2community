@@ -1,6 +1,6 @@
 ---
 name: "stackstorm_update"
-pack: "st2community"
+pack: "stackstorm-community"
 description: "Daily publish previous 24 hours statistics."
 enabled: true
 
@@ -14,10 +14,10 @@ trigger:
     second: 0
 
 action:
-  ref: "st2community.build-and-message"
+  ref: "stackstorm-community.build-and-message"
   parameters:
     user: "StackStorm"
-    channel: "#standup"
+    channel: "#stackstorm"
     delta:
       days: 1
       minutes: 10
