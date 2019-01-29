@@ -1,4 +1,4 @@
-# stackstorm-community
+# st2community
 This pack encompasses the automation used to manage the StackStorm community.
 
 ## Capabilities

@@ -1,6 +1,6 @@
 ---
-ref: stackstorm-community
-name: stackstorm-community
+ref: st2community
+name: st2community
 description: Pack to help manage Stackstorm's community.
 version: 0.1.1
 keywords:

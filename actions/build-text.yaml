@@ -1,6 +1,6 @@
 ---
 name: build-text
-pack: stackstorm-community
+pack: st2community
 description: Render given text with information about PRs and Issues.
 runner_type: python-script
 entry_point: build_text.py

@@ -10,7 +10,7 @@ input:
 
 tasks:
   buildMessage:
-    action: stackstorm-community.build-text
+    action: st2community.build-text
     input:
       body: <% ctx(body) %>
       user: <% ctx(user) %>
