@@ -22,7 +22,7 @@ tasks:
         publish:
           - message: <% result().body %>
   send-message:
-    action: chatops.post_message
+    action: slack.chat.postMessage
     parameters:
       channel: <% ctx(channel) %>
-      timeout: <% ctx(message) %>
+      text: <% ctx(message) %>
