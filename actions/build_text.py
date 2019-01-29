@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Community Update Action
 """
 from datetime import timedelta
@@ -17,7 +17,6 @@ class BuildText(Action):
         """Build and return rendered text
         """
         time_delta = timedelta(
-            months=delta.get('months', 0),
             days=delta.get('days', 0),
             hours=delta.get('hours', 0),
             minutes=delta.get('minutes', 0),

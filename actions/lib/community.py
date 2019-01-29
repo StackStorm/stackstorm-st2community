@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Daily update from Github
 """
 from datetime import datetime, timedelta
@@ -55,7 +55,7 @@ def build_text(
     """build_text processes the new issues and PRs for a given time period and
     returns slack message text to be sent.
     """
-    body = body if body is not None else Template(
+    body = Template(body) if body is not None else Template(
         "Good morning, @oncall. Here's your community update. Yesterday there "
         "were **{{ new_issue_count }}** new issue(s), and "
         "**{{ new_pull_count }}** new pull request(s).\n"
