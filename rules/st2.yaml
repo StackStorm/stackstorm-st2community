@@ -17,7 +17,7 @@ action:
   ref: "st2community.build-and-message"
   parameters:
     user: "StackStorm"
-    channel: standup
+    channel: "#standup"
     delta:
       days: 1
       minutes: 10
