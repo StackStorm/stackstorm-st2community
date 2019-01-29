@@ -20,7 +20,7 @@ tasks:
         do: 
           - sendMessage
         publish:
-          - message: <% result().body %>
+          - message: <% result().result.body %>
   sendMessage:
     action: slack.chat.postMessage
     input:

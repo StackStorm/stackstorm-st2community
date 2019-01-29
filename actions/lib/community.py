@@ -55,7 +55,10 @@ def build_text(
     """build_text processes the new issues and PRs for a given time period and
     returns slack message text to be sent.
     """
-    body = Template(body) if body is not None else Template(
+    if body:
+        body = body.replace('[', '{')
+        body = body.replace(']', '}')
+    template = Template(body) if body is not None else Template(
         "Good morning, @oncall. Here's your community update. Yesterday there "
         "were **{{ new_issue_count }}** new issue(s), and "
         "**{{ new_pull_count }}** new pull request(s).\n"
@@ -73,7 +76,7 @@ def build_text(
     pulls = _get_new_prs(exchange, delta=delta)
     issues = _get_new_issues(exchange, delta=delta)
 
-    return body.render(
+    return template.render(
         new_issue_count=len(issues),
         new_pull_count=len(pulls),
         pulls=pulls,
