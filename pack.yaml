@@ -2,7 +2,7 @@
 ref: st2community
 name: st2community
 description: Pack to help manage Stackstorm's community.
-version: 0.0.1
+version: 0.0.2
 keywords:
   - StackStorm
   - Community

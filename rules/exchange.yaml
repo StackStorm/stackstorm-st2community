@@ -14,7 +14,7 @@ trigger:
     second: 0
 
 action:
-  ref: "st2community.community_update"
+  ref: "st2community.build-and-message"
   parameters:
     user: "StackStorm-Exchange"
     channel: support
