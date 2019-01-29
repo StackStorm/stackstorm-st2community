@@ -17,10 +17,9 @@ tasks:
       delta: <% ctx(delta) %> 
     next:
       - when: <% succeeded() %>
-        next:
-          - send-message
+        do: send-message
         publish:
-          - message: <% result().body %>
+          message: <% result().body %>
   send-message:
     action: slack.chat.postMessage
     parameters:
