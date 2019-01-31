@@ -4,3 +4,8 @@ token:
   type: "string"
   secret: true
   required: true
+forum_rss_feed_url:
+  description: "URL to the forum RSS feed."
+  type: "string"
+  default: "https://forum.stackstorm.com/latest.rss"
+  required: true

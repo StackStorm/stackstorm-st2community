@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from github import Github
 from jinja2 import Template
 
+from lib.forum_posts import get_forum_posts
+
 
 def _iterate_repos(user, func, **kwargs):
     new_items = []
@@ -48,6 +50,7 @@ def _get_new_issues(user, delta):
 
 def build_text(
         token,
+        forum_feed_url,
         body=None,
         user='StackStorm-Exchange',
         delta=timedelta(days=1, minutes=10)
@@ -71,14 +74,22 @@ def build_text(
         "repository.name }}>: <{{ issue.html_url }}|{{ issue.title }}> by <{{ "
         "issue.user.html_url }}|{{ issue.user.name }}>{% endfor %}{% endif %}"
     )
+
+    # 1. Retrieve Github stats for Github organization
     github = Github(token)
     exchange = github.get_user(user)
     pulls = _get_new_prs(exchange, delta=delta)
     issues = _get_new_issues(exchange, delta=delta)
+
+    # 2. Retrieve forum posts from forum.stackstorm.com
+    forum_posts = get_forum_posts(feed_url=forum_feed_url,
+                                  delta=delta)
 
     return template.render(
         new_issue_count=len(issues),
         new_pull_count=len(pulls),
         pulls=pulls,
         issues=issues,
+        new_forum_post_count=len(forum_posts),
+        forum_posts=forum_posts,
     )
