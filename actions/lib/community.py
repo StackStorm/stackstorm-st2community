@@ -65,8 +65,7 @@ def build_text(token, forum_feed_url, template_path, github_users=None,
         user_issues = []
         user_prs = []
 
-        for repo in [github_user.get_repo('st2')]:
-        #for repo in github_user.get_repos():
+        for repo in github_user.get_repos():
             result = get_issues_and_prs_for_repo(repo=repo, delta=delta)
             user_issues.extend(result['issues'])
             user_prs.extend(result['prs'])
