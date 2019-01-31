@@ -82,8 +82,7 @@ def build_text(
     issues = _get_new_issues(exchange, delta=delta)
 
     # 2. Retrieve forum posts from forum.stackstorm.com
-    forum_posts = get_forum_posts(feed_url=forum_feed_url,
-                                  delta=delta)
+    forum_posts = get_forum_posts(feed_url=forum_feed_url, delta=delta)
 
     return template.render(
         new_issue_count=len(issues),
