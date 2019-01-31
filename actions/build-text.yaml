@@ -1,20 +1,28 @@
 ---
 name: build-text
 pack: st2community
-description: Render given text with information about PRs and Issues.
+description: Retrive various daily summary (new issues and PRs in all the repos, new forum posts, ec.).
 runner_type: python-script
 entry_point: build_text.py
 enabled: true
 parameters:
-  body:
-    type: string
-    required: true
-  user:
-    type: string
+  github_users:
+    description: "Github users / organizations to retrieve recent issues and pull requests for."
+    type: array
+    items:
+      type: "string"
+    default:
+      - "StackStorm"
+      - "StackStorm-Exchange"
     required: true
   delta:
+    description: "Time period to retrieve summary for."
     type: object
     required: true
     default:
       days: 1
       minutes: 10
+   template_path:
+     description: "Path to the Jinja template file for the Slack message (relative to the pack directory)."
+     type: "string"
+     default: "etc/message_template.j2"

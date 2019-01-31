@@ -1,94 +1,89 @@
-#!/usr/bin/env python
-"""Daily update from Github
-"""
-
 import os
 
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 
 from github import Github
-from jinja2 import Template
+from jinja2 import Environment
 
 from lib.forum_posts import get_forum_posts
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_TEMPLATE_PATH = os.path.join(BASE_DIR, '../../etc/message_template.j2')
 
 
-def _iterate_repos(user, func, **kwargs):
-    new_items = []
-    for repo in user.get_repos():
-        new_items += func(repo, **kwargs)
-
-    return new_items
-
-
-def _filter_by_date(items, date_attribute, delta):
-    filter_date = datetime.utcnow() - delta
-    filtered_items = []
-
-    for item in items:
-        if getattr(item, date_attribute) > filter_date:
-            filtered_items.append(item)
-
-    return filtered_items
-
-
-def _filter_prs(repo, delta=timedelta(days=1, minutes=10)):
-    return _filter_by_date(repo.get_pulls(), 'created_at', delta)
-
-
-def _get_new_prs(user, delta):
-    return _iterate_repos(user, _filter_prs, delta=delta)
-
-
-def _filter_issues(repo, delta=timedelta(days=1, minutes=10)):
-    issues = _filter_by_date(repo.get_issues(), 'created_at', delta)
-    for index, issue in enumerate(issues):
-        if issue.pull_request:
-            issues.pop(index)
-    return issues
-
-
-def _get_new_issues(user, delta):
-    return _iterate_repos(user, _filter_issues, delta=delta)
-
-
-def build_text(
-        token,
-        forum_feed_url,
-        body=None,
-        user='StackStorm-Exchange',
-        delta=timedelta(days=1, minutes=10)
-):
-    """build_text processes the new issues and PRs for a given time period and
-    returns slack message text to be sent.
+def get_issues_and_prs_for_repo(repo, delta):
     """
-    if body:
-        body = body.replace('[', '{')
-        body = body.replace(']', '}')
+    Retrieve new issues and PRs for the provided user and time period.
+    """
+    result = {
+        'issues': [],
+        'prs': []
+    }
 
-    if not body:
-        # Read default template from file
-        with open(DEFAULT_TEMPLATE_PATH, 'r') as fp:
-            body = fp.read()
+    since_dt = (datetime.now() - delta)
+    issues = list(repo.get_issues(since=since_dt))
 
-    template = Template(body)
+    for issue in issues:
+        if issue.pull_request:
+            result['prs'].append(issue)
+        else:
+            result['issues'].append(issue)
 
-    # 1. Retrieve Github stats for Github organization
+    return result
+
+
+def build_text(token, forum_feed_url, template_path, github_users=None,
+               delta=timedelta(days=1, minutes=10)):
+    """
+    Retrieve the following information for a given time period and return slack
+    text to be sent:
+
+    * Github issues and pull requests for the provided users
+    * Forum posts
+    """
+    github_users = github_users or []
+
+    template_path = os.path.join(BASE_DIR, '../../', template_path)
+    template_path = os.path.abspath(template_path)
+
+    with open(template_path, 'r') as fp:
+        template_data = fp.read()
+
+    template_context = {
+        'github': {},
+        'forum_posts': []
+    }
+
+    # 1. Retrieve Github stats for the provided Github users / organizations
     github = Github(token)
-    exchange = github.get_user(user)
-    pulls = _get_new_prs(exchange, delta=delta)
-    issues = _get_new_issues(exchange, delta=delta)
+
+    for user in github_users:
+        github_user = github.get_user(user)
+
+        # Iterate over all the repos
+        # TODO - this is slow, use whitelist / blacklist?
+        user_issues = []
+        user_prs = []
+
+        for repo in [github_user.get_repo('st2')]:
+        #for repo in github_user.get_repos():
+            result = get_issues_and_prs_for_repo(repo=repo, delta=delta)
+            user_issues.extend(result['issues'])
+            user_prs.extend(result['prs'])
+
+        # NOTE: Jinja doesn't support referencing dict keys with "-" in them
+        username = user.replace('-', '_').lower()
+        template_context['github'][username] = {
+            'user': user,
+            'issues': user_issues,
+            'pulls': user_prs
+        }
 
     # 2. Retrieve forum posts from forum.stackstorm.com
     forum_posts = get_forum_posts(feed_url=forum_feed_url, delta=delta)
+    template_context['forum_posts'] = forum_posts
 
-    return template.render(
-        new_issue_count=len(issues),
-        new_pull_count=len(pulls),
-        pulls=pulls,
-        issues=issues,
-        new_forum_post_count=len(forum_posts),
-        forum_posts=forum_posts,
-    )
+    # Add all information to the template context and render the template
+    env = Environment(trim_blocks=True, lstrip_blocks=True)
+    rendered = env.from_string(template_data).render(template_context)
+    return rendered

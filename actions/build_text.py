@@ -1,13 +1,19 @@
 #!/usr/bin/env python
-"""Community Update Action
 """
+Community Update Action
+"""
+
 from datetime import timedelta
 from st2common.runners.base_action import Action
 
 from lib import community
 
+__all__ = [
+    'BuildTextAction'
+]
 
-class BuildText(Action):
+
+class BuildTextAction(Action):
     """Community Update Action
     """
     def __init__(self, config):

@@ -9,11 +9,10 @@ parameters:
   channel:
     type: string
     required: true
-  body:
-    type: string
-    required: false
-  user:
-    type: string
+  github_users:
+    type: array
+    items:
+      type: "string"
     required: true
   delta:
     type: object

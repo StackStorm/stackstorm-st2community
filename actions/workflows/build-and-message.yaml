@@ -12,8 +12,7 @@ tasks:
   buildMessage:
     action: st2community.build-text
     input:
-      body: <% ctx(body) %>
-      user: <% ctx(user) %>
+      github_users: <% ctx(github_users) %>
       delta: <% ctx(delta) %>
     next:
       - when: <% succeeded() %>
