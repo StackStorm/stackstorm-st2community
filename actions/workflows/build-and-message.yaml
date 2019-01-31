@@ -3,9 +3,8 @@ version: 1.0
 description: Send update to given channel.
 
 input:
+  - github_users
   - channel
-  - body
-  - user
   - delta
 
 tasks:
