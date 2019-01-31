@@ -11,7 +11,7 @@ parameters:
     required: true
   body:
     type: string
-    required: true
+    required: false
   user:
     type: string
     required: true
