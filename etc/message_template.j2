@@ -5,6 +5,6 @@
 {% for issue in issues %}* <{{ issue.repository.html_url }}|{{ issue.repository.name }}>: <{{ issue.html_url }}|{{ issue.title }}> by <{{ issue.user.html_url }}|{{ issue.user.name }}>
 {% endfor %}{% endif %}
 
-{% if forum_posts %}*Forum Posts* (*{{ new_forum_post_count }}*) new post(s)
+{% if forum_posts %}*Forum Posts* (*{{ new_forum_post_count }}* new post(s))
 {% for post in forum_posts %}* <{{ post.link }}|{{ post.title }}> by {{ post.author }}
 {% endfor %}{% endif %}
