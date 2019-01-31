@@ -22,7 +22,7 @@ parameters:
     default:
       days: 1
       minutes: 10
-   template_path:
-     description: "Path to the Jinja template file for the Slack message (relative to the pack directory)."
-     type: "string"
-     default: "etc/message_template.j2"
+  template_path:
+    description: "Path to the Jinja template file for the Slack message (relative to the pack directory)."
+    type: "string"
+    default: "etc/message_template.j2"
