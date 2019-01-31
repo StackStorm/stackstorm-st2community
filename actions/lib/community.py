@@ -1,4 +1,5 @@
 import os
+import codecs
 
 from datetime import datetime
 from datetime import timedelta
@@ -46,7 +47,7 @@ def build_text(logger, token, forum_feed_url, template_path, github_users=None,
     template_path = os.path.join(BASE_DIR, '../../', template_path)
     template_path = os.path.abspath(template_path)
 
-    with open(template_path, 'r') as fp:
+    with codecs.open(template_path, encoding='utf-8') as fp:
         template_data = fp.read()
 
     template_context = {
