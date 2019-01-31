@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 """Daily update from Github
 """
+
+import os
+
 from datetime import datetime, timedelta
 
 from github import Github
 from jinja2 import Template
 
 from lib.forum_posts import get_forum_posts
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_TEMPLATE_PATH = os.path.join(BASE_DIR, '../../etc/message_template.j2')
 
 
 def _iterate_repos(user, func, **kwargs):
@@ -61,19 +67,13 @@ def build_text(
     if body:
         body = body.replace('[', '{')
         body = body.replace(']', '}')
-    template = Template(body) if body is not None else Template(
-        "Good morning, @oncall. Here's your community update. Yesterday there "
-        "were **{{ new_issue_count }}** new issue(s), and "
-        "**{{ new_pull_count }}** new pull request(s).\n"
-        "{% if pulls %}\n*Pull Requests*\n"
-        "{% for pull in pulls %}* <{{ pull.base.repo.html_url }}|{{ pull.base."
-        "repo.name }}>: <{{ pull.html_url }}|{{ pull.title }}> by <{{ pull.use"
-        "r.html_url }}|{{ pull.user.name }}>\n"
-        "{% endfor %}{% endif %}{% if issues %}\n*Issues:*\n"
-        "{% for issue in issues %}* <{{ issue.repository.html_url }}|{{ issue."
-        "repository.name }}>: <{{ issue.html_url }}|{{ issue.title }}> by <{{ "
-        "issue.user.html_url }}|{{ issue.user.name }}>{% endfor %}{% endif %}"
-    )
+
+    if not body:
+        # Read default template from file
+        with open(DEFAULT_TEMPLATE_PATH, 'r') as fp:
+            body = fp.read()
+
+    template = Template(body)
 
     # 1. Retrieve Github stats for Github organization
     github = Github(token)
