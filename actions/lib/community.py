@@ -32,7 +32,7 @@ def get_issues_and_prs_for_repo(repo, delta):
     return result
 
 
-def build_text(token, forum_feed_url, template_path, github_users=None,
+def build_text(logger, token, forum_feed_url, template_path, github_users=None,
                delta=timedelta(days=1, minutes=10)):
     """
     Retrieve the following information for a given time period and return slack
@@ -58,6 +58,8 @@ def build_text(token, forum_feed_url, template_path, github_users=None,
     github = Github(token)
 
     for user in github_users:
+        logger.debug('Retrieving Github issues and prs for user %s' % (user))
+
         github_user = github.get_user(user)
 
         # Iterate over all the repos
@@ -79,6 +81,8 @@ def build_text(token, forum_feed_url, template_path, github_users=None,
         }
 
     # 2. Retrieve forum posts from forum.stackstorm.com
+    logger.debug('Retrieving forum posts')
+
     forum_posts = get_forum_posts(feed_url=forum_feed_url, delta=delta)
     template_context['forum_posts'] = forum_posts
 
