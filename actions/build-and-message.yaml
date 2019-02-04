@@ -1,20 +1,23 @@
 ---
-name: build-and-message
+name: retrieve_data_and_send_message_to_slack
 pack: st2community
-description: Send update to given channel.
+description: Retrieve daily statistics and send message to Slack channel.
 runner_type: orquesta
 entry_point: workflows/build-and-message.yaml
 enabled: true
 parameters:
   channel:
+    description: "Slack channel to send the message to."
     type: string
     required: true
   github_users:
+    description: "Github users / organizations to retrieve issues and PRs for."
     type: array
     items:
       type: "string"
     required: true
   delta:
+    description: "Time period to retrieve data for (from now - delta to now)."
     type: object
     required: true
     default:

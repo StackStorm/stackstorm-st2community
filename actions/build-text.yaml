@@ -1,7 +1,7 @@
 ---
 name: build-text
 pack: st2community
-description: Retrive various daily summary (new issues and PRs in all the repos, new forum posts, ec.).
+description: Retrieve various daily summary (new issues and PRs in all the repos, new forum posts, etc.) and assemble summary text.
 runner_type: python-script
 entry_point: build_text.py
 enabled: true

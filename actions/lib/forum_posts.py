@@ -3,7 +3,6 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
-import six
 import feedparser
 
 __all__ = [
@@ -15,7 +14,7 @@ def get_forum_posts(feed_url, delta=timedelta(days=1, minutes=10)):
     """
     Retrieve forum posts which are been created between now - delta.
     """
-    feed = feedparser.parse('https://forum.stackstorm.com/latest.rss')
+    feed = feedparser.parse(feed_url)
 
     filter_date = (datetime.utcnow() - delta)
 

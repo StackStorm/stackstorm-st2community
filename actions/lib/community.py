@@ -12,27 +12,6 @@ from lib.forum_posts import get_forum_posts
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def get_issues_and_prs_for_repo(repo, delta):
-    """
-    Retrieve new issues and PRs for the provided user and time period.
-    """
-    result = {
-        'issues': [],
-        'prs': []
-    }
-
-    since_dt = (datetime.now() - delta)
-    issues = list(repo.get_issues(since=since_dt))
-
-    for issue in issues:
-        if issue.pull_request:
-            result['prs'].append(issue)
-        else:
-            result['issues'].append(issue)
-
-    return result
-
-
 def build_text(logger, token, forum_feed_url, template_path, github_users=None,
                delta=timedelta(days=1, minutes=10)):
     """
