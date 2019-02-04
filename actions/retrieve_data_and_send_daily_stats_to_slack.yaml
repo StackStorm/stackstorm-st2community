@@ -1,9 +1,9 @@
 ---
-name: retrieve_data_and_send_message_to_slack
+name: retrieve_data_and_send_daily_stats_to_slack
 pack: st2community
 description: Retrieve daily statistics and send message to Slack channel.
 runner_type: orquesta
-entry_point: workflows/build-and-message.yaml
+entry_point: workflows/retrieve_data_and_send_daily_stats_to_slack.yaml
 enabled: true
 parameters:
   channel:

@@ -1,7 +1,7 @@
 ---
-name: "stackstorm_update"
+name: "post_daily_summary_to_slack"
 pack: "st2community"
-description: "Gather and publish various statistics for previous 24 hours."
+description: "Gather and publish various statistics for previous 24 hours to Slack."
 enabled: true
 
 trigger:
@@ -14,12 +14,12 @@ trigger:
     second: 0
 
 action:
-  ref: "st2community.build-and-message"
+  ref: "st2community.retrieve_data_and_send_daily_stats_to_slack"
   parameters:
+    channel: "#stackstorm"
     github_users:
       - "StackStorm"
       - "StackStorm-Exchange"
-    channel: "#stackstorm"
     delta:
       days: 1
       minutes: 10

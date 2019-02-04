@@ -1,6 +1,6 @@
 version: 1.0
 
-description: Send daily summary to given Slack channel.
+description: Retrieve data from various sources and daily summary to given Slack channel.
 
 input:
   - github_users
