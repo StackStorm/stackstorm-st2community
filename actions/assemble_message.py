@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Licensed to the StackStorm, Inc ('StackStorm') under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,22 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from github import Github
-
+from datetime import timedelta
 from st2common.runners.base_action import Action
 
-from lib.utils import get_timedelta_object_from_delta_arg
-from lib.github_issues import get_issues_and_prs_for_user
+from lib import community
 
 __all__ = [
-    'GetGithubIssuesAction'
+    'AssembleMessageAction'
 ]
 
 
-class GetGithubIssuesAction(Action):
-    def run(self, token, username, delta):
-        time_delta = get_timedelta_object_from_delta_arg(delta)
-        github = Github(token)
-        github_user = github.get_user(username)
-        result = get_issues_and_prs_for_user(github_user=github_user, time_delta=time_delta)
-        return result
+class AssembleMessageAction(Action):
+    def run(self, forum_posts, github_data, template_path, delta):
+        """
+        Build and return rendered text.
+        """
+        from pprint import pprint
+        pprint('aaaaa')
+        pprint(forum_posts)
+        pprint(github_data)

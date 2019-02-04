@@ -1,6 +1,6 @@
 version: 1.0
 
-description: Send update to given channel.
+description: Send daily summary to given Slack channel.
 
 input:
   - github_users
@@ -8,18 +8,43 @@ input:
   - delta
 
 tasks:
-  buildMessage:
-    action: st2community.build-text
+  get_forum_posts:
+    action: st2community.get_forum_posts
     input:
-      github_users: <% ctx(github_users) %>
       delta: <% ctx(delta) %>
     next:
       - when: <% succeeded() %>
         do:
-          - sendMessage
+          - assemble_message
+        publish:
+          - forum_posts: <% result().result %>
+  get_github_issues:
+    action: st2community.get_github_issues
+    with:
+      items: <% ctx(github_users) %>
+      concurrency: 1
+    input:
+      username: <% item() %>
+      delta: <% ctx(delta) %>
+    next:
+      - when: <% succeeded() %>
+        do:
+          - assemble_message
+        publish:
+          - github_data: <% task(get_github_issues).result.items.select($.result.result) %>
+  assemble_message:
+    join: all
+    action: st2community.assemble_message
+    input:
+      forum_posts: <% ctx().forum_posts %>
+      github_data: <% ctx().github_data %>
+    next:
+      - when: <% succeeded() %>
+        do:
+          - send_message_to_slack
         publish:
           - message: <% result().result.body %>
-  sendMessage:
+  send_message_to_slack:
     action: slack.chat.postMessage
     input:
       channel: <% ctx(channel) %>

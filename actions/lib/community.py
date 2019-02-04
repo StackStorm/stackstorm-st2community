@@ -12,8 +12,7 @@ from lib.forum_posts import get_forum_posts
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def build_text(logger, token, forum_feed_url, template_path, github_users=None,
-               delta=timedelta(days=1, minutes=10)):
+def build_text(logger, delta=timedelta(days=1, minutes=10)):
     """
     Retrieve the following information for a given time period and return slack
     text to be sent:
