@@ -36,8 +36,8 @@ tasks:
     join: all
     action: st2community.assemble_message
     input:
-      forum_posts: <% ctx().forum_posts %>
-      github_data: <% ctx().github_data %>
+      forum_posts: "<% ctx().forum_posts %>"
+      github_data: "<% ctx().github_data %>"
     next:
       - when: <% succeeded() %>
         do:

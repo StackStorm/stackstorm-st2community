@@ -25,7 +25,7 @@ __all__ = [
 
 
 class AssembleMessageAction(Action):
-    def run(self, forum_posts, github_data, template_path, delta):
+    def run(self, forum_posts, github_data, template_path):
         """
         Build and return rendered text.
         """
