@@ -43,7 +43,7 @@ tasks:
         do:
           - send_message_to_slack
         publish:
-          - message: <% result().result.body %>
+          - message: <% result().result %>
   send_message_to_slack:
     action: slack.chat.postMessage
     input:

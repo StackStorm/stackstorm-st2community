@@ -14,14 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from datetime import timedelta
+import os
+import codecs
+
+
+from jinja2 import Environment
+
 from st2common.runners.base_action import Action
 
-from lib import community
 
 __all__ = [
     'AssembleMessageAction'
 ]
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class AssembleMessageAction(Action):
@@ -29,7 +35,19 @@ class AssembleMessageAction(Action):
         """
         Build and return rendered text.
         """
-        from pprint import pprint
-        pprint('aaaaa')
-        pprint(forum_posts)
-        pprint(github_data)
+
+        template_path = os.path.join(BASE_DIR, '../', template_path)
+        template_path = os.path.abspath(template_path)
+
+        with codecs.open(template_path, encoding='utf-8') as fp:
+            template_data = fp.read()
+
+        template_context = {
+            'github_data': github_data,
+            'forum_posts': forum_posts
+        }
+
+        # Add all information to the template context and render the template
+        env = Environment(trim_blocks=True, lstrip_blocks=True)
+        rendered = env.from_string(template_data).render(template_context)
+        return rendered

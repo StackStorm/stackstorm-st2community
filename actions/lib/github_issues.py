@@ -27,17 +27,21 @@ def get_issues_and_prs_for_repo(repo, time_delta):
     """
     result = {
         'issues': [],
-        'prs': []
+        'pulls': []
     }
 
     since_dt = (datetime.now() - time_delta)
     issues = list(repo.get_issues(since=since_dt))
 
     for issue in issues:
+        # Convert Python object in a native Python type (dict)
+        issue_dict = issue.raw_data
+        issue_dict['repository'] = issue.repository.raw_data
+
         if issue.pull_request:
-            result['prs'].append(issue)
+            result['pulls'].append(issue_dict)
         else:
-            result['issues'].append(issue)
+            result['issues'].append(issue_dict)
 
     return result
 
@@ -47,13 +51,15 @@ def get_issues_and_prs_for_user(github_user, time_delta):
     Retrieve issues and PRs for all the Github repos for the provided user.
     """
     result = {
+        'username': github_user.login.replace('-', '_').lower(),
+        'username_friendly': github_user.login,
         'issues': [],
-        'prs': []
+        'pulls': []
     }
 
     for repo in github_user.get_repos():
-        result = get_issues_and_prs_for_repo(repo=repo, time_delta=time_delta)
-        result['issues'].extend(result['issues'])
-        result['prs'].extend(result['prs'])
+        repo_result = get_issues_and_prs_for_repo(repo=repo, time_delta=time_delta)
+        result['issues'].extend(repo_result['issues'])
+        result['pulls'].extend(repo_result['pulls'])
 
     return result
