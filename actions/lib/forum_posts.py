@@ -1,7 +1,4 @@
 import time
-import json
-
-from st2common.util.jsonify import json_encode
 
 from datetime import datetime
 from datetime import timedelta
@@ -39,7 +36,7 @@ def get_forum_posts(feed_url, delta=timedelta(days=1, minutes=10)):
 
     # Remove complex types (datetime, etc)
     # TODO: Add escape Jinja filter which is available to Orquesta workflows
-    keys_to_remove = ['published_dt', 'summary', 'summary_detail']
+    keys_to_remove = ['published_dt', 'published_parsed', 'summary', 'summary_detail']
     for item in result:
         for key in keys_to_remove:
             if key in item:
