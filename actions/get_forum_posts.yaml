@@ -10,7 +10,10 @@ parameters:
     description: "Forum RSS feed URL."
     type: string
     required: true
-    default: "{{ config_context.forum_feed_url }}"
+    # TODO: Temporary workaround until version with fix in https://github.com/StackStorm/st2/pull/4531
+    # is deployed to cicd
+    default: "https://forum.stackstorm.com/latest.rss"
+    #default: "{{ config_context.forum_feed_url }}"
   delta:
     description: "Time period to retrieve forum posts for."
     type: object
