@@ -1,0 +1,25 @@
+---
+name: retrieve_data_and_send_daily_stats_to_slack
+pack: st2community
+description: Retrieve daily statistics and send message to Slack channel.
+runner_type: orquesta
+entry_point: workflows/retrieve_data_and_send_daily_stats_to_slack.yaml
+enabled: true
+parameters:
+  channel:
+    description: "Slack channel to send the message to."
+    type: string
+    required: true
+  github_users:
+    description: "Github users / organizations to retrieve issues and PRs for."
+    type: array
+    items:
+      type: "string"
+    required: true
+  delta:
+    description: "Time period to retrieve data for (from now - delta to now)."
+    type: object
+    required: true
+    default:
+      days: 1
+      minutes: 10

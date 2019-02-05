@@ -1,0 +1,20 @@
+---
+name: assemble_message
+pack: st2community
+description: Retrieve various daily summary (new issues and PRs in all the repos, new forum posts, etc.) and assemble summary text.
+runner_type: python-script
+entry_point: assemble_message.py
+enabled: true
+parameters:
+  forum_posts:
+    type: array
+    items:
+      type: "object"
+  github_data:
+    type: array
+    items:
+      type: "object"
+  template_path:
+    description: "Path to the Jinja template file for the Slack message (relative to the pack directory)."
+    type: "string"
+    default: "etc/message_template.j2"

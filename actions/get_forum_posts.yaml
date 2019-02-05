@@ -1,0 +1,23 @@
+---
+name: get_forum_posts
+pack: st2community
+description: Retrieve recent forum posts.
+runner_type: python-script
+entry_point: get_forum_posts.py
+enabled: true
+parameters:
+  feed_url:
+    description: "Forum RSS feed URL."
+    type: string
+    required: true
+    # TODO: Temporary workaround until version with fix in https://github.com/StackStorm/st2/pull/4531
+    # is deployed to cicd
+    default: "https://forum.stackstorm.com/latest.rss"
+    #default: "{{ config_context.forum_feed_url }}"
+  delta:
+    description: "Time period to retrieve forum posts for."
+    type: object
+    required: true
+    default:
+      days: 1
+      minutes: 10

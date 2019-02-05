@@ -1,0 +1,33 @@
+Good morning, team. Here's what happened yesterday at StackStorm.
+
+*Forum Posts* (*{{ forum_posts|length }}* new post(s))
+{% if forum_posts %}
+    {% for post in forum_posts %}
+    • <{{ post.link }}|{{ post.title }}> by {{ post.author }}
+    {% endfor %}
+{% else %}
+None.
+{% endif %}
+
+{% for github_user_data in github_data %}
+*{{ github_user_data['username_friendly'] }} Github Organization*
+
+*Issues*  ({{ github_user_data['issues']|length}} new issue(s)):
+{% if github_user_data['issues'] %}
+    {% for issue in github_user_data['issues'] %}
+    • <{{ issue.repository.html_url }}|{{ issue.repository.name }}>: <{{ issue.html_url }}|{{ issue.title }}> by <{{ issue.user.html_url }}|{{ issue.user.login }}>
+    {% endfor %}
+{% else %}
+None.
+{% endif %}
+
+*Pull Requests*  ({{ github_user_data['pulls']|length}} new pull request(s)):
+{% if github_user_data['pulls'] %}
+    {% for issue in github_user_data['pulls'] %}
+    • <{{ issue.repository.html_url }}|{{ issue.repository.name }}>: <{{  issue.pull_request.html_url }}|{{ issue.title }}> by <{{ issue.user.html_url }}|{{ issue.user.login }}>
+    {% endfor %}
+{% else %}
+None.
+{% endif %}
+
+{% endfor %}

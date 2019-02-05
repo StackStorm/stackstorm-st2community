@@ -1,0 +1,26 @@
+---
+name: get_github_issues
+pack: st2community
+description: Retrieve recent Github issues and pull requests.
+runner_type: python-script
+entry_point: get_github_issues.py
+enabled: true
+parameters:
+  token:
+    description: "Github token used to authenticate."
+    type: string
+    secret: true
+    # TODO: Uncomment when new version of st2 is deployed to cicd
+    #required: false
+    #default: "{{ config_context.github_token }}"
+  username:
+    description: "Username of the Github user / organization to retrieve issues for."
+    type: string
+    required: true
+  delta:
+    description: "Time period to retrieve issuesfor."
+    type: object
+    required: true
+    default:
+      days: 1
+      minutes: 10

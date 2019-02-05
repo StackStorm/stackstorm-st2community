@@ -1,0 +1,25 @@
+---
+name: "post_daily_summary_to_slack"
+pack: "st2community"
+description: "Gather and publish various statistics for previous 24 hours to Slack."
+enabled: true
+
+trigger:
+  type: "core.st2.CronTimer"
+  parameters:
+    timezone: "UTC"
+    day_of_week: '*'
+    hour: 17
+    minute: 30
+    second: 0
+
+action:
+  ref: "st2community.retrieve_data_and_send_daily_stats_to_slack"
+  parameters:
+    channel: "#stackstorm"
+    github_users:
+      - "StackStorm"
+      - "StackStorm-Exchange"
+    delta:
+      days: 1
+      minutes: 10
