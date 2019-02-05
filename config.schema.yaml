@@ -1,5 +1,5 @@
 ---
-token:
+github_token:
   description: "Github authentication token."
   type: "string"
   secret: true

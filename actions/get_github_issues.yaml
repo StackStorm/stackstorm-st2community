@@ -11,7 +11,7 @@ parameters:
     type: string
     secret: true
     required: true
-    default: "{{ config_context.token }}"
+    default: "{{ config_context.github_token }}"
   username:
     description: "Username of the Github user / organization to retrieve issues for."
     type: string
