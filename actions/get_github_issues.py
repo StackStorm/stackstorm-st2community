@@ -26,8 +26,10 @@ __all__ = [
 
 
 class GetGithubIssuesAction(Action):
-    def run(self, token, username, delta):
+    #def run(self, token, username, delta):
+    def run(self, username, delta, token=None):
         time_delta = get_timedelta_object_from_delta_arg(delta)
+        token = self.config['github_token']
         github = Github(token)
         github_user = github.get_user(username)
         result = get_issues_and_prs_for_user(github_user=github_user, time_delta=time_delta)

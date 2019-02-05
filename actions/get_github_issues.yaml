@@ -10,8 +10,9 @@ parameters:
     description: "Github token used to authenticate."
     type: string
     secret: true
-    required: true
-    default: "{{ config_context.github_token }}"
+    # TODO: Uncomment when new version of st2 is deployed to cicd
+    #required: false
+    #default: "{{ config_context.github_token }}"
   username:
     description: "Username of the Github user / organization to retrieve issues for."
     type: string
