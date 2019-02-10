@@ -14,6 +14,7 @@
 # limitations under the License.
 
 from github import Github
+from github.GithubException import UnknownObjectException
 
 from st2common.runners.base_action import Action
 
@@ -31,6 +32,14 @@ class GetGithubIssuesAction(Action):
         time_delta = get_timedelta_object_from_delta_arg(delta)
         token = self.config['github_token']
         github = Github(token)
-        github_user = github.get_user(username)
+
+        # NOTE: We try to retrieve organization first, it that doesnt' work, we fall back to a user
+        # If we user "get_user()" on an organization, "get_repos()" will always only return public
+        # repos and not private ones
+        try:
+            github_user = github.get_organization(username)
+        except UnknownObjectException:
+            github_user = github.get_user(username)
+
         result = get_issues_and_prs_for_user(github_user=github_user, time_delta=time_delta)
         return result
