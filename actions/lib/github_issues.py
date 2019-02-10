@@ -62,8 +62,6 @@ def get_issues_and_prs_for_user(github_user, time_delta, repo_type='all'):
     }
 
     for repo in github_user.get_repos(type=repo_type):
-        print repo
-        continue
         repo_result = get_issues_and_prs_for_repo(repo=repo, time_delta=time_delta)
         result['issues'].extend(repo_result['issues'])
         result['pulls'].extend(repo_result['pulls'])
