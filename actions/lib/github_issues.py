@@ -46,9 +46,13 @@ def get_issues_and_prs_for_repo(repo, time_delta):
     return result
 
 
-def get_issues_and_prs_for_user(github_user, time_delta):
+def get_issues_and_prs_for_user(github_user, time_delta, repo_type='all'):
     """
     Retrieve issues and PRs for all the Github repos for the provided user.
+
+    :param repo_type: Type of repos to query for the isssues (all, public, private, forks,
+                      sources, member).
+    :type repo_type: ``str``
     """
     result = {
         'username': github_user.login.replace('-', '_').lower(),
@@ -57,7 +61,9 @@ def get_issues_and_prs_for_user(github_user, time_delta):
         'pulls': []
     }
 
-    for repo in github_user.get_repos():
+    for repo in github_user.get_repos(type=repo_type):
+        print repo
+        continue
         repo_result = get_issues_and_prs_for_repo(repo=repo, time_delta=time_delta)
         result['issues'].extend(repo_result['issues'])
         result['pulls'].extend(repo_result['pulls'])
