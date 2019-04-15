@@ -50,4 +50,15 @@ class AssembleMessageAction(Action):
         # Add all information to the template context and render the template
         env = Environment(trim_blocks=True, lstrip_blocks=True)
         rendered = env.from_string(template_data).render(template_context)
+
+        # Remove any Jinja and YAQL expressions to prevent them from trying to be rendered inside
+        # the workflow
+        rendered = rendered.replace('{%', '').replace('%}', '')
+        rendered = rendered.replace('{{', '').replace('}}', '')
+        rendered = rendered.replace('<%', '').replace('%>', '')
+        rendered = rendered.replace('\\"', '"').replace("\'", "'")
+
+        # Also escape no-valid unicode escape sequences
+        rendered = rendered.replace('\\', '')
+
         return rendered

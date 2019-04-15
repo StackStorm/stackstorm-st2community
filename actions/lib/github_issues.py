@@ -43,6 +43,10 @@ def get_issues_and_prs_for_repo(repo, time_delta):
         else:
             result['issues'].append(issue_dict)
 
+        # Remove fields which we don't need to spin things up
+        if 'body' in issue_dict:
+            del issue_dict['body']
+
     return result
 
 

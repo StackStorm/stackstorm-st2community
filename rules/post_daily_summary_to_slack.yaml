@@ -9,7 +9,7 @@ trigger:
   parameters:
     timezone: "UTC"
     day_of_week: '*'
-    hour: 17
+    hour: 15
     minute: 30
     second: 0
 
