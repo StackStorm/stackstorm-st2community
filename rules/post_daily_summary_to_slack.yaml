@@ -16,7 +16,7 @@ trigger:
 action:
   ref: "st2community.retrieve_data_and_send_daily_stats_to_slack"
   parameters:
-    channel: "#stackstorm"
+    channel: "#development"
     github_users:
       - "StackStorm"
       - "StackStorm-Exchange"
