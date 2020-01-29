@@ -47,5 +47,7 @@ tasks:
   send_message_to_slack:
     action: slack.chat.postMessage
     input:
+      username: st2
+      icon_emoji: ":st2:"
       channel: <% ctx(channel) %>
       text: <% ctx(message) %>
