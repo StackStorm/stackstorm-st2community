@@ -7,6 +7,8 @@ This pack encompasses the automation used to manage the StackStorm community.
 * StackStorm-Exchange organization daily slack update. Sends slack message with
   rollup of the last 24 hours of work within the StackStorm-Exchange
   organization.
+* StackStorm TSC monthly meeting reminders. Sends a slack message to the TSC team
+  30 minutes prior to the start of the monthly TSC meeting.
 
 ## Future
 * Community PR/Issue management
