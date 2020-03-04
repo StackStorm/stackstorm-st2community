@@ -1,0 +1,22 @@
+---
+name: "post_tsc_reminder_to_slack"
+pack: "st2community"
+description: "Post a reminder about the TSC meeting to Slack."
+enabled: true
+
+trigger:
+  type: "core.st2.CronTimer"
+  parameters:
+    timezone: "UTC"
+    day: 1st tue
+    hour: 17
+    minute: 0
+    second: 0
+
+action:
+  ref: "slack.chat.postMessage"
+  parameters:
+    username: st2
+    icon_emoji: ":st2:"
+    channel: "#tsc"
+    text: "@here Reminder, the TSC meeting starts in 30 minutes!"
