@@ -9,7 +9,7 @@ trigger:
   parameters:
     timezone: "UTC"
     day: 1st tue
-    hour: 17
+    hour: 16
     minute: 0
     second: 0
 
