@@ -23,9 +23,7 @@ from jinja2 import Environment
 from st2common.runners.base_action import Action
 
 
-__all__ = [
-    'AssembleMessageAction'
-]
+__all__ = ["AssembleMessageAction"]
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -36,16 +34,13 @@ class AssembleMessageAction(Action):
         Build and return rendered text.
         """
 
-        template_path = os.path.join(BASE_DIR, '../', template_path)
+        template_path = os.path.join(BASE_DIR, "../", template_path)
         template_path = os.path.abspath(template_path)
 
-        with codecs.open(template_path, encoding='utf-8') as fp:
+        with codecs.open(template_path, encoding="utf-8") as fp:
             template_data = fp.read()
 
-        template_context = {
-            'github_data': github_data,
-            'forum_posts': forum_posts
-        }
+        template_context = {"github_data": github_data, "forum_posts": forum_posts}
 
         # Add all information to the template context and render the template
         env = Environment(trim_blocks=True, lstrip_blocks=True)
@@ -53,13 +48,12 @@ class AssembleMessageAction(Action):
 
         # Remove any Jinja and YAQL expressions to prevent them from trying to be rendered inside
         # the workflow
-        rendered = rendered.replace('{%', '').replace('%}', '')
-        rendered = rendered.replace('{{', '').replace('}}', '')
-        rendered = rendered.replace('<%', '').replace('%>', '')
-        rendered = rendered.replace('\\"', '"').replace("\'", "'")
+        rendered = rendered.replace("{%", "").replace("%}", "")
+        rendered = rendered.replace("{{", "").replace("}}", "")
+        rendered = rendered.replace("<%", "").replace("%>", "")
+        rendered = rendered.replace('\\"', '"').replace("'", "'")
 
         # Also escape no-valid unicode escape sequences
-        rendered = rendered.replace('\\', '')
+        rendered = rendered.replace("\\", "")
 
         return rendered
-

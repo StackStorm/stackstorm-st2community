@@ -15,42 +15,36 @@
 
 from datetime import datetime
 
-__all__ = [
-    'get_issues_and_prs_for_repo',
-    'get_issues_and_prs_for_user'
-]
+__all__ = ["get_issues_and_prs_for_repo", "get_issues_and_prs_for_user"]
 
 
 def get_issues_and_prs_for_repo(repo, time_delta):
     """
     Retrieve new issues and PRs for the provided user and time period.
     """
-    result = {
-        'issues': [],
-        'pulls': []
-    }
+    result = {"issues": [], "pulls": []}
 
-    since_dt = (datetime.now() - time_delta)
+    since_dt = datetime.now() - time_delta
     issues = list(repo.get_issues(since=since_dt))
 
     for issue in issues:
         # Convert Python object in a native Python type (dict)
         issue_dict = issue.raw_data
-        issue_dict['repository'] = issue.repository.raw_data
+        issue_dict["repository"] = issue.repository.raw_data
 
         if issue.pull_request:
-            result['pulls'].append(issue_dict)
+            result["pulls"].append(issue_dict)
         else:
-            result['issues'].append(issue_dict)
+            result["issues"].append(issue_dict)
 
         # Remove fields which we don't need to spin things up
-        if 'body' in issue_dict:
-            del issue_dict['body']
+        if "body" in issue_dict:
+            del issue_dict["body"]
 
     return result
 
 
-def get_issues_and_prs_for_user(github_user, time_delta, repo_type='all'):
+def get_issues_and_prs_for_user(github_user, time_delta, repo_type="all"):
     """
     Retrieve issues and PRs for all the Github repos for the provided user.
 
@@ -59,16 +53,15 @@ def get_issues_and_prs_for_user(github_user, time_delta, repo_type='all'):
     :type repo_type: ``str``
     """
     result = {
-        'username': github_user.login.replace('-', '_').lower(),
-        'username_friendly': github_user.login,
-        'issues': [],
-        'pulls': []
+        "username": github_user.login.replace("-", "_").lower(),
+        "username_friendly": github_user.login,
+        "issues": [],
+        "pulls": [],
     }
 
     for repo in github_user.get_repos(type=repo_type):
         repo_result = get_issues_and_prs_for_repo(repo=repo, time_delta=time_delta)
-        result['issues'].extend(repo_result['issues'])
-        result['pulls'].extend(repo_result['pulls'])
+        result["issues"].extend(repo_result["issues"])
+        result["pulls"].extend(repo_result["pulls"])
 
     return result
-
