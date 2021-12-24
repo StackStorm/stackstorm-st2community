@@ -62,3 +62,4 @@ class AssembleMessageAction(Action):
         rendered = rendered.replace('\\', '')
 
         return rendered
+

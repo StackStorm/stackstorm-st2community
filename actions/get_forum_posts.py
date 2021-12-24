@@ -28,3 +28,4 @@ class GetForumPostsAction(Action):
         time_delta = get_timedelta_object_from_delta_arg(delta)
         result = get_forum_posts(feed_url=feed_url, delta=time_delta)
         return result
+

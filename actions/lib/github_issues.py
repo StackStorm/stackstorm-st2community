@@ -71,3 +71,4 @@ def get_issues_and_prs_for_user(github_user, time_delta, repo_type='all'):
         result['pulls'].extend(repo_result['pulls'])
 
     return result
+

@@ -44,3 +44,4 @@ def get_forum_posts(feed_url, delta=timedelta(days=1, minutes=10)):
 
     # Serialzie it to json and back to end up only with simple types
     return result
+

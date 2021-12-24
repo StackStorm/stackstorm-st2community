@@ -43,3 +43,4 @@ class GetGithubIssuesAction(Action):
 
         result = get_issues_and_prs_for_user(github_user=github_user, time_delta=time_delta)
         return result
+
