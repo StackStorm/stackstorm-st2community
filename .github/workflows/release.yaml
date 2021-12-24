@@ -4,7 +4,7 @@ on:
   push:
     branches:
       # the default branch
-      - aaa
+      - master
 
 permissions:
   contents: write
