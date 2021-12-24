@@ -18,9 +18,7 @@ from st2common.runners.base_action import Action
 from lib.utils import get_timedelta_object_from_delta_arg
 from lib.forum_posts import get_forum_posts
 
-__all__ = [
-    'GetForumPostsAction'
-]
+__all__ = ["GetForumPostsAction"]
 
 
 class GetForumPostsAction(Action):

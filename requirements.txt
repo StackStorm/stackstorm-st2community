@@ -1,3 +1,5 @@
-PyGithub==1.43.5
+PyGithub==1.43.5 ; python_version < '3.6'
+PyGithub==1.55 ; python_version >= '3.6'
 Jinja2==2.11.3
-feedparser==5.2.1
+feedparser==5.2.1 ; python_version < '3.6'
+feedparser==6.0.8 ; python_version >= '3.6'

@@ -21,16 +21,14 @@ from st2common.runners.base_action import Action
 from lib.utils import get_timedelta_object_from_delta_arg
 from lib.github_issues import get_issues_and_prs_for_user
 
-__all__ = [
-    'GetGithubIssuesAction'
-]
+__all__ = ["GetGithubIssuesAction"]
 
 
 class GetGithubIssuesAction(Action):
-    #def run(self, token, username, delta):
+    # def run(self, token, username, delta):
     def run(self, username, delta, token=None):
         time_delta = get_timedelta_object_from_delta_arg(delta)
-        token = self.config['github_token']
+        token = self.config["github_token"]
         github = Github(token)
 
         # NOTE: We try to retrieve organization first, it that doesnt' work, we fall back to a user
@@ -41,5 +39,7 @@ class GetGithubIssuesAction(Action):
         except UnknownObjectException:
             github_user = github.get_user(username)
 
-        result = get_issues_and_prs_for_user(github_user=github_user, time_delta=time_delta)
+        result = get_issues_and_prs_for_user(
+            github_user=github_user, time_delta=time_delta
+        )
         return result

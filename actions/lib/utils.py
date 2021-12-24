@@ -15,16 +15,15 @@
 
 from datetime import timedelta
 
-__all__ = [
-    'get_timedelta_object_from_delta_arg'
-]
+__all__ = ["get_timedelta_object_from_delta_arg"]
+
 
 def get_timedelta_object_from_delta_arg(delta):
     time_delta = timedelta(
-            days=delta.get('days', 0),
-            hours=delta.get('hours', 0),
-            minutes=delta.get('minutes', 0),
-            seconds=delta.get('seconds', 0)
-        )
+        days=delta.get("days", 0),
+        hours=delta.get("hours", 0),
+        minutes=delta.get("minutes", 0),
+        seconds=delta.get("seconds", 0),
+    )
 
     return time_delta
