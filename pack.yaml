@@ -2,12 +2,11 @@
 ref: st2community
 name: st2community
 description: Pack to help manage Stackstorm's community.
-version: 0.4.0
+version: 0.4.1
 keywords:
   - StackStorm
   - Community
 author: StackStorm
 email: info@stackstorm.com
 python_versions:
-  - "2"
   - "3"
