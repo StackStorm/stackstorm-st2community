@@ -7,9 +7,9 @@ enabled: true
 trigger:
   type: "core.st2.CronTimer"
   parameters:
-    timezone: US/Pacific
+    timezone: UTC
     day: 2nd tue
-    hour: 9
+    hour: 5
     minute: 0
     second: 0
 

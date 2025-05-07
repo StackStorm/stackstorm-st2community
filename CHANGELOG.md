@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.1
+
+## Add
+
+## Change
+ - Updated tsc reminder for 30 minutes before 17h30 UTC.
+ 
+## Delete
+
 ## 0.4.0
 
 - Created this CHANGELOG.md
