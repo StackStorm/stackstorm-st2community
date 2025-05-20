@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.3
+
+## Add
+
+## Change
+ - Relax python module pinning.
+ 
+## Delete
+
 ## 0.4.2
 
 ## Add
