@@ -14,9 +14,8 @@ trigger:
     second: 0
 
 action:
-  ref: "slack.chat.postMessage"
+  ref: "chatops.post_message"
   parameters:
-    username: st2
-    icon_emoji: ":st2:"
     channel: "#tsc"
-    text: "@here Reminder, the TSC meeting starts in 30 minutes!"
+    route: errbot
+    message: ":st2: @here Reminder, the TSC meeting starts in 30 minutes!"
