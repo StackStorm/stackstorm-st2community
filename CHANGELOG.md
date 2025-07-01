@@ -15,7 +15,8 @@
 
 ## Change
  - Updated tsc reminder for 30 minutes before 17h30 UTC.
- 
+ - Use chatops pack over slack pack to send messages.
+
 ## Delete
 
 ## 0.4.0
