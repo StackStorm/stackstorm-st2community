@@ -53,3 +53,6 @@ tasks:
       route: errbot
       channel: <% ctx(channel) %>
       message: "<% ctx(message) %>"
+      extra:
+        slack:
+          mrkdwn: true
